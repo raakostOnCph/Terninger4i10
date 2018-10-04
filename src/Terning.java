@@ -36,6 +36,12 @@ public class Terning {
         this.aktiv = aktiv;
     }
 
+    public boolean isAktiv() {
+        return aktiv;
+    }
+
+
+
     public void kastTerning() {
 
         slag = random.nextInt(sideantal)+1;

@@ -56,7 +56,45 @@ public class Main {
 
         tegnTerningerne(ternings);
 
+        fjernTerninger(ternings);
 
+
+        tegnTerningerne(ternings);
+
+
+
+        int [] histogram = new int [sideAntal + 1];
+
+
+        tælTerninger(ternings, histogram);
+
+
+        visHistogram(histogram);
+
+    }
+
+    private static void visHistogram(int[] histogram) {
+        for (int i = 1; i < histogram.length; i++) {
+
+            System.out.println("antal ønje " + i + " " + histogram[i] );
+        }
+    }
+
+    private static void tælTerninger(Terning[] ternings, int[] histogram) {
+        for (int i = 0; i < ternings.length; i++) {
+
+            if (ternings[i].isAktiv()== true) {
+
+                histogram[ternings[i].getSlag()]++;
+            }
+
+
+        }
+    }
+
+
+
+    private static void fjernTerninger(Terning[] ternings) {
         // det er så det følgende stykke kode vi skal have lavet til en funktion. Det er her vi starter !
         int fjern = getInput("hvilke terninger vil du fjerne !");
 
@@ -68,15 +106,10 @@ public class Main {
 
 
         }
-
-        tegnTerningerne(ternings);
-
-
-
     }
 
     //
-    //TODO: 1) lav en funktion der kan fjerne en terning Koden er allerede lavet i main. Fortsæt på samme møde med resten af opgaverne.
+
 
     //TODO: 2) lav en funktion der kan lave et histogram over terninger i et slaget. Hvordan siker vi os at de terninger vi har fjernet ikke kommer med i optællingen ?
 
