@@ -24,13 +24,13 @@ public class Main {
 //* */
 
 
-/*Disposition for i dag.
-*
-* Vi har lavet noget kode i main der kan fjerne terninger, så vi mangler bare at lave det til en funktion.
-*
-* så skal vi lave resten af funktionerne der skal til for at vi kan spille spille, og så skal vi se om vi ikke
-* kan gøre spillet automatisk.
-* */
+    /*Disposition for i dag.
+     *
+     * Vi har lavet noget kode i main der kan fjerne terninger, så vi mangler bare at lave det til en funktion.
+     *
+     * så skal vi lave resten af funktionerne der skal til for at vi kan spille spille, og så skal vi se om vi ikke
+     * kan gøre spillet automatisk.
+     * */
 
 
     public static Scanner scanner = new Scanner(System.in);
@@ -39,20 +39,22 @@ public class Main {
         // write your code here
 
 
-
-
         int antalTerninger = getInput("hvor mange terninger skal vi have ?");  //   her opretter vi og tilskriver i et trin, men det kan også gøre i to hvis du synes det er lettere at læse
 
         int sideAntal = getInput("hvor mange sider skal de have");
 
         Terning[] ternings = new Terning[antalTerninger];                       // her laver vi et array
 
-        int [] histogram = new int [sideAntal + 1];
+        int[] histogram = new int[sideAntal + 1];
 
-            fyldTerningeArray(ternings,sideAntal);
+        fyldTerningeArray(ternings, sideAntal);
+
+        int max = 1;
+
+        int antalSlag =0;
 
 
-            while (true) {
+        while (true) {
 
             kastAlleTerningerne(ternings);
 
@@ -60,43 +62,69 @@ public class Main {
 
             tegnTerningerne(ternings);
 
+            max = findMax(tælTerninger(ternings, sideAntal));
 
-             visHistogram(tælTerninger(ternings, sideAntal));
+            if (max == 0) {
+
+                break;
+            }
 
 
+            visHistogram(tælTerninger(ternings, sideAntal));
 
+
+            System.out.println("flest antal øjne" + max);
             fjernTerninger(ternings);
 
 
             tegnTerningerne(ternings);
+            antalSlag++;
 
         }
 
+        System.out.println("afsluttet med " + antalSlag + " slag");
 
+    }
+
+    private static int findMax(int[] histo) {
+
+        int temp = 0;
+
+        int index = 0;
+
+        for (int i = 0; i < histo.length; i++) {
+
+            if (temp < histo[i]) {
+                temp = histo[i];
+
+                index = i;
+            }
+
+        }
+        return index;
     }
 
     private static void visHistogram(int[] histogram) {
         for (int i = 1; i < histogram.length; i++) {
 
-            System.out.println("antal ønje " + i + " " + histogram[i] );
+            System.out.println("antal ønje " + i + " " + histogram[i]);
         }
     }
 
-    private static int [] tælTerninger(Terning[] ternings, int sideAntal) {
+    private static int[] tælTerninger(Terning[] ternings, int sideAntal) {
 
-        int [] tempHisrogram = new int [sideAntal + 1];
+        int[] tempHisrogram = new int[sideAntal + 1];
 
         for (int i = 0; i < ternings.length; i++) {
 
-            if (ternings[i].isAktiv()== true) {
+            if (ternings[i].isAktiv() == true) {
 
                 tempHisrogram[ternings[i].getSlag()]++;
             }
 
         }
-            return tempHisrogram;
+        return tempHisrogram;
     }
-
 
 
     private static void fjernTerninger(Terning[] ternings) {
@@ -105,7 +133,7 @@ public class Main {
 
         for (int i = 0; i < ternings.length; i++) {
 
-            if (ternings[i].getSlag() == fjern ) {
+            if (ternings[i].getSlag() == fjern) {
                 ternings[i].setAktiv(false);
             }
 
@@ -116,22 +144,14 @@ public class Main {
     //
 
 
-        //TODO: 4) lav en funktion der kan finde den værdi der er flest af.
-
-    // TODO 5) pak det hele ind i et while loop, så vi kan spille spillet.
-
     //TODO: 6) find på noget det gør det muligt at holde øje med hvor mange kast man har brugt
 
-    //TODO: 7) lav et felt(variable) på klassen der kan holde øje med hvor mange terninger der til tilbage i spillet.
+    //TODO: 7) Bue ! lav et felt(variable) på klassen der kan holde øje med hvor mange terninger der til tilbage i spillet.
 
 //    def:  heuristik, retningslinjer eller regler for tænkning og handling i forbindelse med udformning
 //    af en bestemt videnskab eller udførelse af bestemte handlinger.
 
     //TODO: 8) Se om du ikke kan benytte de forskellige metoder vi har lavet til at beskrive en heuristike der kan spille spille automatisk.
-
-
-
-
 
 
     private static void tegnTerningerne(Terning[] ternings) {
@@ -156,16 +176,19 @@ public class Main {
     private static void viseAlleTerninger(Terning[] ternings) {
         for (int i = 0; i < ternings.length; i++) {
 
-            System.out.println(ternings[i].getSlag());
+            if (ternings[i].isAktiv()) {
+                System.out.println(ternings[i].getSlag());
+            }
         }
     }
 
     private static void kastAlleTerningerne(Terning[] ternings) {
+
+
         for (int i = 0; i < ternings.length; i++) {
 
-            ternings[i].kastTerning();
-
-
+            if (ternings[i].isAktiv())
+                ternings[i].kastTerning();
         }
     }
 
@@ -175,8 +198,6 @@ public class Main {
             ternings[i] = new Terning(sideAntal);
         }
     }
-
-
 
 
 }
