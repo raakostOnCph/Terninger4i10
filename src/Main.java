@@ -47,29 +47,31 @@ public class Main {
 
         Terning[] ternings = new Terning[antalTerninger];                       // her laver vi et array
 
-
-        fyldTerningeArray(ternings,sideAntal);
-
-        kastAlleTerningerne(ternings);
-
-        viseAlleTerninger(ternings);
-
-        tegnTerningerne(ternings);
-
-        fjernTerninger(ternings);
-
-
-        tegnTerningerne(ternings);
-
-
-
         int [] histogram = new int [sideAntal + 1];
 
+            fyldTerningeArray(ternings,sideAntal);
 
-        tælTerninger(ternings, histogram);
+
+            while (true) {
+
+            kastAlleTerningerne(ternings);
+
+            viseAlleTerninger(ternings);
+
+            tegnTerningerne(ternings);
 
 
-        visHistogram(histogram);
+             visHistogram(tælTerninger(ternings, sideAntal));
+
+
+
+            fjernTerninger(ternings);
+
+
+            tegnTerningerne(ternings);
+
+        }
+
 
     }
 
@@ -80,16 +82,19 @@ public class Main {
         }
     }
 
-    private static void tælTerninger(Terning[] ternings, int[] histogram) {
+    private static int [] tælTerninger(Terning[] ternings, int sideAntal) {
+
+        int [] tempHisrogram = new int [sideAntal + 1];
+
         for (int i = 0; i < ternings.length; i++) {
 
             if (ternings[i].isAktiv()== true) {
 
-                histogram[ternings[i].getSlag()]++;
+                tempHisrogram[ternings[i].getSlag()]++;
             }
 
-
         }
+            return tempHisrogram;
     }
 
 
@@ -111,11 +116,7 @@ public class Main {
     //
 
 
-    //TODO: 2) lav en funktion der kan lave et histogram over terninger i et slaget. Hvordan siker vi os at de terninger vi har fjernet ikke kommer med i optællingen ?
-
-    //TODO: 3 )lav en funktion der kan udskrive histogrammet. Husk at vi ikke er interessert i at få i = 0 med, 0 ikke er et slag
-
-    //TODO: 4) lav en funktion der kan finde den værdi der er flest af.
+        //TODO: 4) lav en funktion der kan finde den værdi der er flest af.
 
     // TODO 5) pak det hele ind i et while loop, så vi kan spille spillet.
 
